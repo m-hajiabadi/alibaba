@@ -85,10 +85,30 @@ exec add_air_company 'Taban';
 exec add_air_company 'Americanairlinesgroup';
 exec add_air_company 'Airtranairways';
 exec add_air_company 'Jetblue';
+exec add_air_company 'Eurowings';
+exec add_air_company 'ACM Air Charter';
+exec add_air_company 'Aero-Dienst';
+exec add_air_company 'AeroLogic';
+exec add_air_company 'Lufthansa';
+
+
 select * from air_companies;
 --add flight
 exec add_flight '', 'Los Angeles', 'Tehran', '20/09/1400', '', 300, 'Jetblue', 50000000;
 exec add_flight '', 'Los Angeles', 'Tehran', '20/08/1400', '', 300, 'Jetblue', 50000000;
+exec add_flight '', 'Tehran', 'Toronto', '20/08/1400', '', 200, 'Jetblue', 500000;
+exec add_flight '', 'Tehran', 'Toronto', '21/08/1400', '', 200, 'Airtranairways', 550000;
+exec add_flight '', 'Tehran', 'Toronto', '22/08/1400', '', 200, 'Americanairlinesgroup', 530000;
+exec add_flight '', 'Tehran', 'Toronto', '23/08/1400', '', 200, 'Americanairlinesgroup', 540000;
+exec add_flight '', 'Tehran', 'Toronto', '24/09/1400', '', 200, 'Airtranairways', 520000;
+exec add_flight '', 'Tehran', 'Toronto', '25/08/1400', '', 200, 'Jetblue', 560000;
+exec add_flight '', 'Tehran', 'Toronto', '26/09/1400', '', 200, 'Jetblue', 570000;
+exec add_flight '', 'Tehran', 'Toronto', '26/05/1400', '', 200, 'Jetblue', 580000;
+
+exec add_flight '', 'Tehran', 'Frankfurt', '27/09/1400', '', 200, 'Lufthansa', 600000;
+exec add_flight '', 'Tehran', 'Frankfurt', '28/09/1400', '', 200, 'Eurowings', 580000;
+exec add_flight '', 'Tehran', 'Frankfurt', '26/08/1400', '', 200, 'AeroLogic', 520000;
+
 exec add_flight '', 'Tehran', 'Najaf', '20/09/1400', '', 300, 'Mahan', 5000000;
 exec add_flight '', 'Tehran', 'Kish', '20/09/1400', '25/09/1400', 300, 'Iranair', 500000;
 exec add_flight '', 'Tehran', 'Kish', '20/09/1400', '', 300, 'Iranair', 500000;
@@ -102,11 +122,26 @@ exec add_flight_order 'Los Angeles', 'Tehran', '20/08/1400', '', 1, 'johnwick@gm
 exec add_flight_order 'Los Angeles', 'Tehran', '20/08/1400', '', 1, 'hosseinmahdavi@gmail.com';
 exec add_flight_order 'Los Angeles', 'Tehran', '20/09/1400', '', 1, 'hosseinmahdavi@gmail.com';
 exec add_flight_order 'Los Angeles', 'Tehran', '20/09/1400', '', 2, 'hosseinmahdavi@gmail.com';
+
+exec add_flight_order 'Tehran', 'Frankfurt', '27/09/1400', '', 1, 'johnwick@gmail.com';
+exec add_flight_order 'Tehran', 'Frankfurt', '28/09/1400', '', 1, 'johnwick@gmail.com';
+exec add_flight_order 'Tehran', 'Frankfurt', '26/08/1400', '', 1, 'johnwick@gmail.com';
+
+exec add_flight_order 'Tehran', 'Frankfurt', '27/09/1400', '', 2, 'hosseinmahdavi@gmail.com';
+exec add_flight_order 'Tehran', 'Frankfurt', '28/09/1400', '', 2, 'hosseinmahdavi@gmail.com';
+exec add_flight_order 'Tehran', 'Frankfurt', '26/08/1400', '', 2, 'hosseinmahdavi@gmail.com';
+
+exec add_flight_order 'Tehran', 'Frankfurt', '26/08/1400', '', 3, 'zohrehrasouli@gmail.com';
+exec add_flight_order 'Tehran', 'Frankfurt', '27/09/1400', '', 3, 'zohrehrasouli@gmail.com';
+select * from users
 select * from flight_orders;
 select * from transactions where descrip = 'flight ticket';
 ---------------------------------------------------------------------------------------------------------------------
 --6)
 exec add_bus_order 'Tehran', 'Mashhad', '23/09/1400', '', 6, 'mohammadsajjadi@gmail.com';
+exec add_bus_order 'Tehran', 'Mashhad', '23/09/1400', '', 13, 'johnwick@gmail.com';
+exec add_bus_order 'Tehran', 'Mashhad', '23/09/1400', '', 12, 'armanfadaei@gmail.com';
+
 select * from bus_orders;
 select * from transactions where descrip = 'bus ticket';
 ---------------------------------------------------------------------------------------------------------------------

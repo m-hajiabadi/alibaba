@@ -176,7 +176,7 @@ end;
 exec hotelOrBusUsers 2, 'Tehran';
 ---------------------------------------------------------------------------------------------------------------------
 --7)internationalFlight
-alter procedure internationalFlight @X int, @Y varchar(20), @Z varchar(20), @N int
+create procedure internationalFlight @X int, @Y varchar(20), @Z varchar(20), @N int
 as
 begin
 	declare @international_cities table(id int)  
@@ -187,36 +187,82 @@ begin
 	exec @source_id = get_city_id @Y;
 	exec @destination_id = get_city_id @Z;
 
-	select * 
+	select top (@X) *
 	from flights
 	where (source_id in (select id from @international_cities) or destination_id in (select id from @international_cities))
 			and source_id = @source_id and destination_id = @destination_id 
-			and datediff(month, CONVERT(datetime, departure_date, 131), CONVERT(datetime, FORMAT(GETDATE(), 'dd/MM/yyyy', 'fa'), 131)) < @N;
+			and datediff(month, CONVERT(datetime, departure_date, 131), CONVERT(datetime, FORMAT(GETDATE(), 'dd/MM/yyyy', 'fa'), 131)) < @N
+	order by cost;
 end;
-
-
-
-exec internationalFlight 0, 'Los Angeles', 'Tehran', 2;
-select * from flight_orders;
+exec internationalFlight 5, 'Tehran', 'Toronto', 3;
+select * from flights;
 ---------------------------------------------------------------------------------------------------------------------
-declare @international_cities table(id int)  
+--8)allInternationalTickets
+alter procedure allInternationalTickets @X varchar(20), @Y varchar(20), @Z varchar(20), @A varchar(20), @B varchar(20)
+as 
+begin
+	declare @international_cities table(id int)  
 	insert into @international_cities
-	exec get_international_cities;
-	select * 
+	exec get_international_cities
+	
+	declare @source_id int, @destination_id int;
+	exec @source_id = get_city_id @Y;
+	exec @destination_id = get_city_id @Z;
+
+	select * from flight_orders
+	where flight_id in
+	(select id
 	from flights
 	where (source_id in (select id from @international_cities) or destination_id in (select id from @international_cities))
-select * from flights
-exec get_international_cities
+			and source_id = @source_id and destination_id = @destination_id and flight_type = @X
+			and  (convert(datetime, departure_date, 131) between convert(datetime, @A, 131) and convert(datetime, @B, 131)))
 
-select city_name 
-from cities
-where id in exec get_cities_by_country 'Iran';
-select * from cities
+end;
+exec allInternationalTickets '','Tehran', 'Frankfurt', '25/09/1400', '30/09/1400';
+---------------------------------------------------------------------------------------------------------------------
+--9)joinedUsers
+create procedure joinedUsers @A varchar(20), @B varchar(20), @C int
+as 
+begin
+	--users with bus_order + flight_order = num
+	declare @ids table(id int, num int)  
+	insert into @ids
+	select users_id as id, count(*) as num
+	from bus_orders bo, bus_trips bt
+	where bo.bus_trip_id = bt.id 
+		and datediff(month, CONVERT(datetime, bt.departure_date, 131), CONVERT(datetime, FORMAT(GETDATE(), 'dd/MM/yyyy', 'fa'), 131)) <= 1
+	group by users_id
+	union
+	select users_id as id, count(*) as num
+	from flight_orders fo, flights f
+	where fo.flight_id = f.id
+		and datediff(month, CONVERT(datetime, f.departure_date, 131), CONVERT(datetime, FORMAT(GETDATE(), 'dd/MM/yyyy', 'fa'), 131)) <= 1
+	group by users_id;
 
-select balance from users where email = 'zohrehrasouli@gmail.com';
-select * from hotel_orders
-select * from bus_orders
-select * from bus_trips
-select * from flight_orders
-select * from cities
-select * from bus_companies 
+	--users with no bus_order or flight_order that means they have orders equal to 0 
+	insert into @ids
+	select id,0
+	from users
+	where id not in (select id from @ids);
+	
+	--delete users with bus_orders + flight_orders >= C
+	delete from @ids
+	where id not in(
+	select id
+	from @ids
+	group by id
+	having sum(num) < @C);
+
+	--users with created_date between A  and B
+	insert into @ids
+	select id,null
+	from users
+	where (convert(datetime, created_date, 131) between convert(datetime, @B, 131) and convert(datetime, @A, 131));
+
+	select * 
+	from users
+	where id in (select id from @ids);
+
+end;
+exec joinedUsers '25/11/1400', '13/10/1400', 2;
+
