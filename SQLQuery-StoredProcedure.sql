@@ -307,3 +307,23 @@ begin
 	where country_id not in (select id from countries where country_name = 'Iran')
 end;
 ---------------------------------------------------------------------------------------------------------------------
+--get_user_id_by_first_name_last_name
+create procedure get_user_id_by_first_name_last_name @first_name varchar(20), @last_name varchar(20)
+as
+begin
+	declare @user_id int;
+	select @user_id = id from users where first_name = @first_name and last_name = @last_name
+	return @user_id;
+end;
+---------------------------------------------------------------------------------------------------------------------
+--charge
+create procedure charge @amount int, @users_id int
+as
+begin
+	update users
+	set balance = balance + @amount
+	where id = @users_id;
+
+	insert into transactions(trans_type,descrip,amount, users_id)
+	values('Increase inventory', 'charge',@amount, @users_id);
+end;

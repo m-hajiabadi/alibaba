@@ -106,3 +106,6 @@ begin
   from room r , inserted ins
   where users.id = ins.users_id and r.id = ins.room_id;
 end
+---------------------------------------------------------------------------------------------------------------------
+
+select * from transactions

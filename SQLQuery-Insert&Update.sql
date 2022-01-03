@@ -69,6 +69,17 @@ exec add_bus_trip 'VIP', 'Tehran', 'Mashhad', '23/09/1400', '', 22, 'Iranpeyma',
 exec add_bus_trip 'VIP', 'Tehran', 'Babol', '24/09/1400', '', 22, 'Iranpeyma', 610000;
 exec add_bus_trip 'VIP', 'Tehran', 'Birjand', '16/09/1400', '', 25, 'Lavannour', 2290000;
 exec add_bus_trip 'VIP', 'Tehran', 'Esfahan', '16/09/1400', '', 25, 'Royalsafar', 940000;
+exec add_bus_trip 'VIP', 'Karaj', 'Qom', '16/09/1400', '', 25, 'Iranpeyma', 500000;
+exec add_bus_trip 'VIP', 'Karaj', 'Qom', '16/08/1400', '', 25, 'Lavannour', 500000;
+exec add_bus_trip 'VIP', 'Karaj', 'Qom', '16/07/1400', '', 25, 'Royalsafar', 500000;
+exec add_bus_trip 'VIP', 'Shiraz', 'Esfahan', '23/10/1400', '', 25, 'Seirosafar', 500000;
+exec add_bus_trip 'VIP', 'Shiraz', 'Esfahan', '24/10/1400', '', 25, 'Seirosafar', 550000;
+exec add_bus_trip 'VIP', 'Shiraz', 'Esfahan', '25/10/1400', '', 25, 'Seirosafar', 950000;
+exec add_bus_trip 'VIP', 'Shiraz', 'Esfahan', '18/10/1400', '', 25, 'Seirosafar', 450000;
+exec add_bus_trip 'VIP', 'Shiraz', 'Esfahan', '17/10/1400', '', 25, 'Seirosafar', 490000;
+exec add_bus_trip 'VIP', 'Shiraz', 'Esfahan', '23/10/1400', '', 25, 'Adl', 500000;
+
+exec add_bus_trip 'VIP', 'Tehran', 'Bandar Abbas', '16/09/1400', '', 25, 'Royalsafar', 1110000;
 select * from bus_trips;
 ---------------------------------------------------------------------------------------------------------------------
 --4)
@@ -114,6 +125,9 @@ exec add_flight '', 'Tehran', 'Kish', '20/09/1400', '25/09/1400', 300, 'Iranair'
 exec add_flight '', 'Tehran', 'Kish', '20/09/1400', '', 300, 'Iranair', 500000;
 exec add_flight '', 'Tehran', 'Kish', '21/09/1400', '', 300, 'Iranair', 500000;
 exec add_flight '', 'Tehran', 'Kish', '21/09/1400', '', 300, 'Mahan', 500000;
+
+exec add_flight '', 'Bandar Abbas', 'Dubai', '21/09/1400', '', 100, 'Mahan', 5000000;
+exec add_flight '', 'Bandar Abbas', 'Dubai', '14/09/1400', '', 100, 'Mahan', 5000000;
 select * from flights;
 ---------------------------------------------------------------------------------------------------------------------
 --5)
@@ -133,6 +147,10 @@ exec add_flight_order 'Tehran', 'Frankfurt', '26/08/1400', '', 2, 'hosseinmahdav
 
 exec add_flight_order 'Tehran', 'Frankfurt', '26/08/1400', '', 3, 'zohrehrasouli@gmail.com';
 exec add_flight_order 'Tehran', 'Frankfurt', '27/09/1400', '', 3, 'zohrehrasouli@gmail.com';
+
+exec add_flight_order 'Bandar Abbas', 'Dubai', '21/09/1400', '', 3, 'johnwick@gmail.com';
+exec add_flight_order 'Bandar Abbas', 'Dubai', '14/09/1400', '', 3, 'armanfadaei@gmail.com';
+
 select * from users
 select * from flight_orders;
 select * from transactions where descrip = 'flight ticket';
@@ -141,6 +159,8 @@ select * from transactions where descrip = 'flight ticket';
 exec add_bus_order 'Tehran', 'Mashhad', '23/09/1400', '', 6, 'mohammadsajjadi@gmail.com';
 exec add_bus_order 'Tehran', 'Mashhad', '23/09/1400', '', 13, 'johnwick@gmail.com';
 exec add_bus_order 'Tehran', 'Mashhad', '23/09/1400', '', 12, 'armanfadaei@gmail.com';
+exec add_bus_order 'Tehran', 'Bandar Abbas', '16/09/1400', '', 1, 'johnwick@gmail.com';
+exec add_bus_order 'Tehran', 'Bandar Abbas', '16/09/1400', '', 2, 'armanfadaei@gmail.com';
 
 select * from bus_orders;
 select * from transactions where descrip = 'bus ticket';
