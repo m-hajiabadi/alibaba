@@ -310,7 +310,7 @@ begin
 	group by u.id;
 	
 	--check conditions
-	select id, sum(charge_number), sum(buy_number)
+	select id, sum(charge_number) , sum(buy_number)
 	from @charge_buy
 	group by id
 	having sum(charge_number) >= @X and sum(buy_number) <= @Y;
@@ -383,10 +383,38 @@ begin
 end;
 exec twoTrips 'Tehran', 'Bandar Abbas', 'Dubai';
 ---------------------------------------------------------------------------------------------------------------------
+--15)lastChange
+create procedure lastChange @X varchar(20), @Y varchar(20)
+as
+begin
+	select top 1 trans_type, descrip, date_time
+	from transactions
+	where users_id in (select id
+						from users
+						where first_name = @X and last_name = @Y)
+	order by date_time desc;
+
+end;
+exec lastChange 'zohreh', 'rasuoli';
+---------------------------------------------------------------------------------------------------------------------
+--16)reserveHotel_1
+create procedure reserveHotel_1 @N int, @X varchar(20), @A varchar(20), @B varchar(20), @M int, @Y varchar(20), @C varchar(20), @D varchar(20)
+as
+begin
+	
+
+	select *
+	from hotel_orders
+	where hotel_id in ()
+end;
+exec reserveHotel_1 3, 'Kish', '15/10/1398','15/10/1400', 4, 'Tehran', '25/01/1396', '11/05/1399';
+select * from transactions
+
 select * from bus_trips
 select * from bus_companies
 
 select * from cities
+select * from hotel_orders
 
 
 
